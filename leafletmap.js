@@ -4,16 +4,19 @@ window.onload = function () {
 
     $.getJSON("data/census_json.geojson", function(data) {
 
-    var geojson = L.geoJson(data, {
+    var jsonfeature = L.geoJson(data, {
 
         pointToLayer: function (feature, latlng) {
-            var smallIcon = L.icon({
-                               iconSize: [27, 27],
-                               iconAnchor: [13, 27],
-                               popupAnchor:  [1, -24],
-                               iconUrl: 'data/leaf.png'});
+            var geojsonMarkerOptions = {
+                radius: 8,
+                fillColor: "green",
+                color: "blue",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
      
-              return L.marker(latlng, {icon: smallIcon});
+              return L.circleMarker(latlng, geojsonMarkerOptions);
             },
 
         onEachFeature: function (feature, layer) {
@@ -22,11 +25,19 @@ window.onload = function () {
     });
 
     var map = L.map('my-map')
-    .fitBounds(geojson.getBounds());
+    .fitBounds(jsonfeature.getBounds());
 //    .setView([0.0,-10.0], 2);
 
     basemap.addTo(map);
-    geojson.addTo(map);
+    jsonfeature.addTo(map);
   });
 
+};
+var geojsonMarkerOptions = {
+    radius: 8,
+    fillColor: "#ff7800",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
 };
