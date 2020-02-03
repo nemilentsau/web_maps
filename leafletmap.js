@@ -5,8 +5,19 @@ window.onload = function () {
     $.getJSON("data/census_json.geojson", function(data) {
 
     var geojson = L.geoJson(data, {
-      onEachFeature: function (feature, layer) {
-        layer.bindPopup(feature.properties.Area_Name);
+
+        pointToLayer: function (feature, latlng) {
+            var smallIcon = L.icon({
+                               iconSize: [27, 27],
+                               iconAnchor: [13, 27],
+                               popupAnchor:  [1, -24],
+                               iconUrl: 'data/leaf.png'});
+     
+              return L.marker(latlng, {icon: smallIcon});
+            },
+
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup(feature.properties.Area_Name);
       }
     });
 
